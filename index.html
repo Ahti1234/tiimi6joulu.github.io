@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-  <meta charset="UTF-8">
-  <title>Meidän Joulukalenteri</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Joulukalenteri</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>Joulukalenteri</h1>
+<h1>Joulukalenteri</h1>
 
-  <div id="calendar" class="grid"></div>
+<div class="grid" id="calendar"></div>
 
-  <div id="modal" class="modal hidden">
-    <div class="content">
-      <span id="close">✖</span>
-      <p id="modalText"></p>
-    </div>
-  </div>
+<div id="modal" onclick="this.style.display='none'">
+  <img id="modalImg" src="">
+</div>
 
-  <script src="script.js"></script>
+<script>
+  const today = new Date().getDate(); // 1–31
+  const calendar = document.getElementById("calendar");
+
+  for (let i = 1; i <= 24; i++) {
+    let b = document.createElement("div");
+    b.className = "box";
+    b.textContent = i;
+
+    if (i > today) b.classList.add("locked");
+
+    b.onclick = () => {
+      if (i > today) return;
+      document.getElementById("modalImg").src = "img/" + i + ".png";
+      document.getElementById("modal").style.display = "flex";
+    };
+
+    calendar.appendChild(b);
+  }
+</script>
+
 </body>
 </html>
