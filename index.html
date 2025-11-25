@@ -1,40 +1,46 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="fi">
 <head>
 <meta charset="UTF-8">
 <title>Joulukalenteri</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="tyyli.css">
 </head>
 <body>
 
 <h1>Joulukalenteri</h1>
 
-<div class="grid" id="calendar"></div>
+<!-- Kalenteriruudukko -->
+<div class="ruudukko" id="kalenteri"></div>
 
-<div id="modal" onclick="this.style.display='none'">
-  <img id="modalImg" src="">
+<!-- Näyttää kuvan avatusta luukusta -->
+<div id="modaali" onclick="this.style.display='none'">
+  <img id="modaaliKuva" src="" alt="Joulukalenterin kuva">
 </div>
 
 <script>
-  const today = new Date().getDate(); // 1–31
-  const calendar = document.getElementById("calendar");
+  // Etsii tämän päivän päivämäärä
+  const tanaan = new Date().getDate(); 
+  const kalenteri = document.getElementById("kalenteri");
 
-  for (let i = 1; i <= 24; i++) {
-    let b = document.createElement("div");
-    b.className = "box";
-    b.textContent = i;
+  // Luodaan 24 luukkua joulukuun päiville
+  for (let paiva = 1; paiva <= 24; paiva++) {
+    let luukku = document.createElement("div");
+    luukku.className = "luukku";
+    luukku.textContent = paiva;
 
-    if (i > today) b.classList.add("locked");
+    // Luukku on lukittu jos päivä on tulevaisuudessa
+     if (paiva > tanaan) luukku.classList.add("lukittu");
 
-    b.onclick = () => {
-      if (i > today) return;
-      document.getElementById("modalImg").src = "img/" + i + ".png";
-      document.getElementById("modal").style.display = "flex";
+    // Avaa luukun
+    luukku.onclick = () => {
+      if (paiva > tanaan) return;
+      document.getElementById("modaaliKuva").src = "kuvat/" + paiva + ".png";
+      document.getElementById("modaali").style.display = "flex";
     };
 
-    calendar.appendChild(b);
+    // Lisätään luukku ruudukkoon
+    kalenteri.appendChild(luukku);
   }
 </script>
-
 </body>
 </html>
